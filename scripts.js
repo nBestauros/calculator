@@ -33,21 +33,31 @@ buttons.forEach(button => button.addEventListener("click", function(e){
     handleInput(this.id)
 }));
 
-
+//if either arent true, reset memory value.
 var hasUsedOperator = false;
 var justEqualed=false;
+
+//if there are no numbers, dont start calculating yet.
 var hasStarted=false;
+
+//if we just used an operator, then reset our operand.
 var justUsedOperator=false;
+
+//stores the highlighted operator.
 var selectedOperator = "";
 
 function handleInput(buttonID){
     let str = buttonID;
+    //just recieve our input info (removes "button" from string)
     str = str.substring(6);
     console.log("input: "+ str)
+
     if(operations.includes(str)){
         var willError=false;
+        //if we already have data in place, calculate the result when an operation is clicked.
         if(hasStarted){
             memoryvalue=operate(parseFloat(memoryvalue), parseFloat(operand), operator);
+            //if we divide by zero, show the user an error and reset.
             if(memoryvalue=="error"){
                 willError=true;
             }
@@ -56,13 +66,13 @@ function handleInput(buttonID){
         if(willError){
             wipe(true);
         }
-
+        //if the user hits equals, solve and display the result on screen.
         if(str=="equals"){
             if(selectedOperator!=""){
                 selectedOperator.style.backgroundColor="lightblue";
                 selectedOperator="";
             }
-            hasUsedOperator=false;
+            hasUsedOperator=true;
             justEqualed=true;
             hasStarted=false;
             displayMemoryValue();
@@ -72,6 +82,7 @@ function handleInput(buttonID){
                 selectedOperator.style.backgroundColor="lightblue";
                 console.log("hello!!!")
             }
+            justEqualed=false;
             operator = str;
             hasUsedOperator=true;
             hasStarted=true;
@@ -86,10 +97,21 @@ function handleInput(buttonID){
 
         
     }
+
+    /*
+    If we recieved a number, check if we are setting the memory for the first time.
+    If we already have used an operator, and are putting in our operand, 
+        store this new number temporarily in operand.
+    */
     if(!isNaN(str)){
         display.textContent=str;
-        if(!hasUsedOperator){
+        if(!hasUsedOperator || justEqualed){
             console.log("Hi")
+            
+            if(justEqualed){
+                wipe(false);
+            }
+            //If the value is zero, replace it with the input
             if(memoryvalue==0){
                 memoryvalue=str;
             }
@@ -100,10 +122,12 @@ function handleInput(buttonID){
         }
         else{
             if(justUsedOperator){
+                //if we just used an operator, we are making a new operand.
                 operand=0;
                 justUsedOperator=false;
             }
             if(operand==0){
+                //If the value is zero, replace it with the input
                 operand=str;
                 console.log(operand);
             }
@@ -112,7 +136,7 @@ function handleInput(buttonID){
                 console.log(operand);
             }
 
-            
+            //display our temporary operand as we are typing it.
             display.textContent=operand;
 
         }
@@ -144,5 +168,7 @@ function wipe(isError){
 
 /*https://stackoverflow.com/questions/16471419/javascript-trim-toprecision-trailing-zeros */
 function displayMemoryValue(){
-    display.textContent=parseFloat(memoryvalue).toPrecision(7).replace(/\.?0+$/,"");
+    console.log("before: " +memoryvalue);
+    display.textContent=parseFloat(memoryvalue).toPrecision(7).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1");
+    console.log("after: " + display.textContent);
 }
