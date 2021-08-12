@@ -1,0 +1,70 @@
+body {
+    background-color: lightcoral;
+}
+.buttons{
+    display: grid;
+    grid-gap: 20px;
+
+    grid-template-columns: repeat(4, minmax(30px, 5vw));
+    grid-template-rows: repeat(4, 25%);
+    grid-template-areas:
+    "button7 button8 button9 buttonplus"
+    "button4 button5 button6 buttonminus"
+    "button1 button2 button3 buttonx"
+    "button0 button0 button0 buttondiv";
+}
+
+
+.button{
+    background-color: lightblue;
+    border-color: snow;
+    border-style: solid;
+    width: 100%;
+    text-align: center;
+    margin: auto;
+    color: white;
+    font-size: 2vh;
+}
+
+#button0{
+    grid-area: button0;
+}
+#button1{
+    grid-area: button1;
+}
+#button2{
+    grid-area: button2;
+}
+#button3{
+    grid-area: button3;
+}
+#button4{
+    grid-area: button4;
+}
+#button5{
+    grid-area: button5;
+}
+#button6{
+    grid-area: button6;
+}
+#button7{
+    grid-area: button7;
+}
+#button8{
+    grid-area: button8;
+}
+#button9{
+    grid-area: button9;
+}
+#buttonplus{
+    grid-area: buttonplus;
+}
+#buttonminus{
+    grid-area: buttonminus;
+}
+#buttonx{
+    grid-area: buttonx;
+}
+#buttondiv{
+    grid-area: buttondiv;
+}
