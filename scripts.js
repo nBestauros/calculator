@@ -1,7 +1,7 @@
 let operand = 0;
 let memoryvalue = 0;
 let operator = "";
-let operations = ["add", "subtract", "multiply", "divide"];
+let operations = ["add", "subtract", "multiply", "divide", "equals"];
 
 function operate(num1, num2, operation){
     if(operation=="add"){
@@ -45,18 +45,45 @@ function handleInput(buttonID){
     str = str.substring(6);
     console.log("input: "+ str)
     if(operations.includes(str)){
-        if(selectedOperator!=""){
-            selectedOperator.style.backgroundColor="lightblue";
-            console.log("hello!!!")
+        var willError=false;
+        if(hasStarted){
+            memoryvalue=operate(parseFloat(memoryvalue), parseFloat(operand), operator);
+            if(memoryvalue=="error"){
+                willError=true;
+            }
+            console.log("result: "+memoryvalue);
         }
-        operator = str;
-        hasUsedOperator=true;
-        hasStarted=true;
-        justUsedOperator=true;
-        displayMemoryValue();
-        let buttonName = "button"+str;
-        selectedOperator = document.getElementById(buttonName);
-        selectedOperator.style.backgroundColor="crimson";
+        if(willError){
+            wipe(true);
+        }
+
+        if(str=="equals"){
+            if(selectedOperator!=""){
+                selectedOperator.style.backgroundColor="lightblue";
+                selectedOperator="";
+            }
+            hasUsedOperator=false;
+            justEqualed=true;
+            hasStarted=false;
+            displayMemoryValue();
+        }
+        else{
+            if(selectedOperator!=""){
+                selectedOperator.style.backgroundColor="lightblue";
+                console.log("hello!!!")
+            }
+            operator = str;
+            hasUsedOperator=true;
+            hasStarted=true;
+            justUsedOperator=true;
+            displayMemoryValue();
+            let buttonName = "button"+str;
+            selectedOperator = document.getElementById(buttonName);
+            selectedOperator.style.backgroundColor="crimson";
+        }
+
+
+
         
     }
     if(!isNaN(str)){
@@ -78,36 +105,19 @@ function handleInput(buttonID){
             }
             if(operand==0){
                 operand=str;
+                console.log(operand);
             }
             else{
                 operand+=str;
+                console.log(operand);
             }
 
-            var willError=false;
-
-            if(hasStarted){
-                memoryvalue=operate(parseFloat(memoryvalue), parseFloat(operand), operator);
-                if(memoryvalue=="error"){
-                    willError=true;
-                }
-                console.log("result: "+memoryvalue);
-            }
+            
             display.textContent=operand;
-            if(willError){
-                wipe(true);
-            }
+
         }
     }
-    if(str=="equals"){
-        if(selectedOperator!=""){
-            selectedOperator.style.backgroundColor="lightblue";
-            selectedOperator="";
-        }
-        hasUsedOperator=false;
-        justEqualed=true;
-        hasStarted=false;
-        displayMemoryValue();
-    }
+
     if(str=="clear"){
         wipe();
     }
