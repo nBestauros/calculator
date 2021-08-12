@@ -38,16 +38,26 @@ var hasUsedOperator = false;
 var justEqualed=false;
 var hasStarted=false;
 var justUsedOperator=false;
+var selectedOperator = "";
+
 function handleInput(buttonID){
     let str = buttonID;
     str = str.substring(6);
     console.log("input: "+ str)
     if(operations.includes(str)){
+        if(selectedOperator!=""){
+            selectedOperator.style.backgroundColor="lightblue";
+            console.log("hello!!!")
+        }
         operator = str;
         hasUsedOperator=true;
         hasStarted=true;
         justUsedOperator=true;
-        display.textContent=memoryvalue;
+        displayMemoryValue();
+        let buttonName = "button"+str;
+        selectedOperator = document.getElementById(buttonName);
+        selectedOperator.style.backgroundColor="crimson";
+        
     }
     if(!isNaN(str)){
         display.textContent=str;
@@ -59,7 +69,7 @@ function handleInput(buttonID){
             else{
                 memoryvalue+=str;
             }
-            display.textContent=memoryvalue;
+            displayMemoryValue();
         }
         else{
             if(justUsedOperator){
@@ -89,10 +99,14 @@ function handleInput(buttonID){
         }
     }
     if(str=="equals"){
+        if(selectedOperator!=""){
+            selectedOperator.style.backgroundColor="lightblue";
+            selectedOperator="";
+        }
         hasUsedOperator=false;
         justEqualed=true;
         hasStarted=false;
-        display.textContent=memoryvalue;
+        displayMemoryValue();
     }
     if(str=="clear"){
         wipe();
@@ -100,6 +114,10 @@ function handleInput(buttonID){
 }
 
 function wipe(isError){
+    if(selectedOperator!=""){
+        selectedOperator.style.backgroundColor="lightblue";
+        selectedOperator="";
+    }
     justUsedOperator = false;
     hasUsedOperator = false;
     justEqualed=false;
@@ -112,4 +130,9 @@ function wipe(isError){
     if(isError){
         display.textContent="ERROR!";
     }
+}
+
+/*https://stackoverflow.com/questions/16471419/javascript-trim-toprecision-trailing-zeros */
+function displayMemoryValue(){
+    display.textContent=parseFloat(memoryvalue).toPrecision(7).replace(/\.?0+$/,"");
 }
