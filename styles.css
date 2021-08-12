@@ -1,29 +1,46 @@
 body {
     background-color: lightcoral;
+    margin: 0;
+    height: 100vh;
+}
+
+.calculatorcontainer{
+    margin: 0 auto;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    margin-top: 30vh;
+    
+    background-color:lightsalmon;
+
 }
 .buttons{
+    padding: 1vw;
     display: grid;
-    grid-gap: 20px;
-
+    grid-gap: 1vw;
     grid-template-columns: repeat(4, minmax(30px, 5vw));
-    grid-template-rows: repeat(4, 25%);
+    grid-template-rows: repeat(5, 5vw);
     grid-template-areas:
+    "display display display display"
     "button7 button8 button9 buttonplus"
     "button4 button5 button6 buttonminus"
     "button1 button2 button3 buttonx"
-    "button0 button0 button0 buttondiv";
+    "button0 button0 buttonc buttondiv";
 }
 
+.display {
+    background-color: snow;
+    width: 100%;
+    grid-area: display;
+}
 
 .button{
     background-color: lightblue;
-    border-color: snow;
-    border-style: solid;
     width: 100%;
     text-align: center;
-    margin: auto;
+    margin: 0;
     color: white;
-    font-size: 2vh;
+    font-size: 3.5vw;
 }
 
 #button0{
@@ -67,4 +84,7 @@ body {
 }
 #buttondiv{
     grid-area: buttondiv;
+}
+#buttonclear{
+    grid-area: buttonc;
 }
