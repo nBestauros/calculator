@@ -25,7 +25,7 @@ body {
     "button7 button8 button9 buttonplus"
     "button4 button5 button6 buttonminus"
     "button1 button2 button3 buttonx"
-    "button0 button0 buttonc buttondiv";
+    "button0 buttonc buttonequals buttondiv";
 }
 
 .display {
@@ -73,18 +73,21 @@ body {
 #button9{
     grid-area: button9;
 }
-#buttonplus{
+#buttonadd{
     grid-area: buttonplus;
 }
-#buttonminus{
+#buttonsubtract{
     grid-area: buttonminus;
 }
-#buttonx{
+#buttonmultiply{
     grid-area: buttonx;
 }
-#buttondiv{
+#buttondivide{
     grid-area: buttondiv;
 }
 #buttonclear{
     grid-area: buttonc;
+}
+#buttonequals{
+    grid-area: buttonequals;
 }
